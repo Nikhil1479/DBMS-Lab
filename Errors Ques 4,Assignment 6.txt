@@ -1,0 +1,236 @@
+SQL> select deptid from employee group by deptid having count(*) > (select deptid from employee group by deptid having deptid = 10);
+
+no rows selected
+
+SQL> select deptid from employee group by deptid having deptid = 10;
+
+    DEPTID
+----------
+        10
+
+SQL> select deptid from employee group by deptid having deptid = '20';
+
+    DEPTID
+----------
+        20
+
+SQL> select deptid from employee group by deptid having count(select deptid = 20);
+select deptid from employee group by deptid having count(select deptid = 20)
+                                                         *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select deptid from employee group by deptid having count(select deptid where deptid = 20);
+select deptid from employee group by deptid having count(select deptid where deptid = 20)
+                                                         *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select deptid from employee group by deptid having deptid = count(select deptid where deptid = 20);
+select deptid from employee group by deptid having deptid = count(select deptid where deptid = 20)
+                                                                  *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> select * from employee;
+
+EMPLOYEEID LNAME                FNAME                POSITIONID SUPERVISOR           HIREDATE      SALARY COMMISSION     DEPTID     QUALID
+---------- -------------------- -------------------- ---------- -------------------- --------- ---------- ---------- ---------- ----------
+       111 Smith                John                          1 Scott                15-APR-60     320650      35000         30          1
+       246 Houstan              Larry                         2 Emma                 19-MAY-67     150000      10000         40          2
+       123 Gupta                Nikhil                        2 Mathew               12-FEB-91      75000                    10          2
+       543 Dave                 Derek                         2 Sean                 15-MAR-95      80000      20000         20          1
+       433 McCall               Alex                          3 Mark                 05-MAY-97      66500                    20          4
+
+SQL> select * from dept;
+
+    DEPTID DEPTNAME             LOCATION             EMPLOYEEID
+---------- -------------------- -------------------- ----------
+        10 Finance              Charlotte                   123
+        20 Infosys              New York                    543
+        30 Sales                Wood Bridge                 135
+        40 Marketing            Los Angeles                 246
+        50 Managing             Las Vegas                   111
+
+SQL> select deptid, count(*) from employee group by deptid having deptid = 20;
+
+    DEPTID   COUNT(*)
+---------- ----------
+        20          2
+
+SQL> select count(deptid) from employee group by deptid having deptid = 20);
+select count(deptid) from employee group by deptid having deptid = 20)
+                                                                     *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select count(deptid) from employee group by deptid having deptid = 20;
+
+COUNT(DEPTID)
+-------------
+            2
+
+SQL> select deptid, fname from employee group by deptid having count(*) > (select count(deptid) from employee group by deptid having deptid = 20);
+select deptid, fname from employee group by deptid having count(*) > (select count(deptid) from employee group by deptid having deptid = 20)
+               *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> select deptid from employee group by deptid having count(*) > (select count(deptid) from employee group by deptid having deptid = 20);
+
+no rows selected
+
+SQL> select deptid, fname from employee group by deptid having count(*) > (select count(deptid) from employee group by deptid having deptid = 20);
+select deptid, fname from employee group by deptid having count(*) > (select count(deptid) from employee group by deptid having deptid = 20)
+               *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> select deptid from employee group by deptid having count(*) > (select count(deptid) from employee group by deptid having deptid = 10);
+
+    DEPTID
+----------
+        20
+
+SQL> select deptid from employee group by deptid having count(*) > (select count(deptid) from employee group by deptid having deptid = 10)
+  2
+SQL> select fname, deptid from employee group by deptid having count(*) > (select count(deptid) from employee group by deptid having deptid = 10)
+  2  ;
+select fname, deptid from employee group by deptid having count(*) > (select count(deptid) from employee group by deptid having deptid = 10)
+       *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> select dept.deptname, dept.deptid from employee INNER JOIN Dept ON DEPT.deptid = employee.deptid having count(*) > (select count(deptid) from employee group by deptid having deptid = 10);
+select dept.deptname, dept.deptid from employee INNER JOIN Dept ON DEPT.deptid = employee.deptid having count(*) > (select count(deptid) from employee group by deptid having deptid = 10)
+       *
+ERROR at line 1:
+ORA-00937: not a single-group group function
+
+
+SQL> select distinct(dept.deptname), dept.deptid from employee INNER JOIN Dept ON DEPT.deptid = employee.deptid having count(*) > (select count(deptid) from employee group by deptid having deptid = 10);
+select distinct(dept.deptname), dept.deptid from employee INNER JOIN Dept ON DEPT.deptid = employee.deptid having count(*) > (select count(deptid) from employee group by deptid having deptid = 10)
+                *
+ERROR at line 1:
+ORA-00937: not a single-group group function
+
+
+SQL> select deptid from employee group by deptid having count(*) > (select count(deptid) from employee group by deptid having deptid = 10);
+
+    DEPTID
+----------
+        20
+
+SQL> select * from dept;
+
+    DEPTID DEPTNAME             LOCATION             EMPLOYEEID
+---------- -------------------- -------------------- ----------
+        10 Finance              Charlotte                   123
+        20 Infosys              New York                    543
+        30 Sales                Wood Bridge                 135
+        40 Marketing            Los Angeles                 246
+        50 Managing             Las Vegas                   111
+
+SQL> select * from employee;
+
+EMPLOYEEID LNAME                FNAME                POSITIONID SUPERVISOR           HIREDATE      SALARY COMMISSION     DEPTID     QUALID
+---------- -------------------- -------------------- ---------- -------------------- --------- ---------- ---------- ---------- ----------
+       111 Smith                John                          1 Scott                15-APR-60     320650      35000         30          1
+       246 Houstan              Larry                         2 Emma                 19-MAY-67     150000      10000         40          2
+       123 Gupta                Nikhil                        2 Mathew               12-FEB-91      75000                    10          2
+       543 Dave                 Derek                         2 Sean                 15-MAR-95      80000      20000         20          1
+       433 McCall               Alex                          3 Mark                 05-MAY-97      66500                    20          4
+
+SQL> select distinct(dept.deptname), employee.deptid from employee INNER JOIN Dept ON DEPT.deptid = employee.deptid having count(*) > (select count(deptid) from employee group by deptid having deptid = 10);
+select distinct(dept.deptname), employee.deptid from employee INNER JOIN Dept ON DEPT.deptid = employee.deptid having count(*) > (select count(deptid) from employee group by deptid having deptid = 10)
+                *
+ERROR at line 1:
+ORA-00937: not a single-group group function
+
+
+SQL> select dept.deptname, employee.deptid from employee INNER JOIN Dept ON DEPT.deptid = employee.deptid having count(*) > (select count(deptid) from employee group by deptid having deptid = 10);
+select dept.deptname, employee.deptid from employee INNER JOIN Dept ON DEPT.deptid = employee.deptid having count(*) > (select count(deptid) from employee group by deptid having deptid = 10)
+       *
+ERROR at line 1:
+ORA-00937: not a single-group group function
+
+
+SQL> select dept.deptname, employee.deptid from employee group by employee.deptid INNER JOIN Dept ON DEPT.deptid = employee.deptid having count(*) > (select count(deptid) from employee group by deptid having deptid = 10);
+select dept.deptname, employee.deptid from employee group by employee.deptid INNER JOIN Dept ON DEPT.deptid = employee.deptid having count(*) > (select count(deptid) from employee group by deptid having deptid = 10)
+                                                                             *
+ERROR at line 1:
+ORA-00933: SQL command not properly ended
+
+
+SQL> select dept.deptname, employee.deptid from employee INNER JOIN Dept ON DEPT.deptid = employee.deptid group by employee.deptid having count(*) > (select count(deptid) from employee group by deptid having deptid = 10);
+select dept.deptname, employee.deptid from employee INNER JOIN Dept ON DEPT.deptid = employee.deptid group by employee.deptid having count(*) > (select count(deptid) from employee group by deptid having deptid = 10)
+       *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> select dept.deptname, employee.deptid from employee INNER JOIN Dept ON DEPT.deptid = employee.deptid group by employee.deptid having count(employee.*) > (select count(deptid) from employee group by deptid having deptid = 10);
+select dept.deptname, employee.deptid from employee INNER JOIN Dept ON DEPT.deptid = employee.deptid group by employee.deptid having count(employee.*) > (select count(deptid) from employee group by deptid having deptid = 10)
+                                                                                                                                                    *
+ERROR at line 1:
+ORA-01747: invalid user.table.column, table.column, or column specification
+
+
+SQL> select dept.deptname, employee.deptid from employee INNER JOIN Dept ON DEPT.deptid = employee.deptid group by employee.deptid having count(employee.*) > (select count(deptid) from employee group by deptid having deptid
+  2
+SQL>
+SQL>
+SQL> select * from dept;
+
+    DEPTID DEPTNAME             LOCATION             EMPLOYEEID
+---------- -------------------- -------------------- ----------
+        10 Finance              Charlotte                   123
+        20 Infosys              New York                    543
+        30 Sales                Wood Bridge                 135
+        40 Marketing            Los Angeles                 246
+        50 Managing             Las Vegas                   111
+
+SQL> select * from employee;
+
+EMPLOYEEID LNAME                FNAME                POSITIONID SUPERVISOR           HIREDATE      SALARY COMMISSION     DEPTID     QUALID
+---------- -------------------- -------------------- ---------- -------------------- --------- ---------- ---------- ---------- ----------
+       111 Smith                John                          1 Scott                15-APR-60     320650      35000         30          1
+       246 Houstan              Larry                         2 Emma                 19-MAY-67     150000      10000         40          2
+       123 Gupta                Nikhil                        2 Mathew               12-FEB-91      75000                    10          2
+       543 Dave                 Derek                         2 Sean                 15-MAR-95      80000      20000         20          1
+       433 McCall               Alex                          3 Mark                 05-MAY-97      66500                    20          4
+
+SQL> select dept.deptname, employee.deptid from employee INNER JOIN Dept ON Dept.deptid = employee.deptid group by employee.deptid having count(employee.*) > (select count(employee.deptid) from employee INNER JOIN dept ON dept.deptid = employee.deptid group by employee.deptid having employee.deptid = 10);
+select dept.deptname, employee.deptid from employee INNER JOIN Dept ON Dept.deptid = employee.deptid group by employee.deptid having count(employee.*) > (select count(employee.deptid) from employee INNER JOIN dept ON dept.deptid = employee.deptid group by employee.deptid having employee.deptid = 10)
+                                                                                                                                                    *
+ERROR at line 1:
+ORA-01747: invalid user.table.column, table.column, or column specification
+
+
+SQL> select dept.deptname, employee.deptid from employee INNER JOIN Dept ON Dept.deptid = employee.deptid group by employee.deptid having count(employee.fname) > (select count(employee.deptid) from employee INNER JOIN dept ON dept.deptid = employee.deptid group by employee.deptid having employee.deptid = 10);
+select dept.deptname, employee.deptid from employee INNER JOIN Dept ON Dept.deptid = employee.deptid group by employee.deptid having count(employee.fname) > (select count(employee.deptid) from employee INNER JOIN dept ON dept.deptid = employee.deptid group by employee.deptid having employee.deptid = 10)
+       *
+ERROR at line 1:
+ORA-00979: not a GROUP BY expression
+
+
+SQL> select dept.deptname, deptid from employee INNER JOIN Dept ON Dept.deptid = employee.deptid group by employee.deptid having count(employee.fname) > (select count(employee.deptid) from employee INNER JOIN dept ON dept.deptid =deptid group by employee.deptid having employee.deptid = 10);
+select dept.deptname, deptid from employee INNER JOIN Dept ON Dept.deptid = employee.deptid group by employee.deptid having count(employee.fname) > (select count(employee.deptid) from employee INNER JOIN dept ON dept.deptid =deptid group by employee.deptid having employee.deptid = 10)
+                      *
+ERROR at line 1:
+ORA-00918: column ambiguously defined
+
+
+SQL> select deptid, count(*) from employee group by deptid having count(*)>
+  2   (select count(*) from employee where deptid=10);
+
+    DEPTID   COUNT(*)
+---------- ----------
+        20          2
