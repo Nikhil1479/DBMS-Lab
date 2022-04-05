@@ -160,15 +160,24 @@ SQL> select * from location where roomtype != 'O' and capacity <= ANY
 -- 5                    WingD                401                           3 NonAC
 
 
+-- Ques 16.
+SQL> select * from (select * from crssection where termid='SP22'
+  2  order by maxcount desc) where rownum<=3;
+
+-- CSID                 COURSEID             SECTION              TERMID               FACULTYID            DAY                  STARTTIME            ENDTIME              ROOMID                 MAXCOUNT
+-- -------------------- -------------------- -------------------- -------------------- -------------------- -------------------- -------------------- -------------------- -------------------- ----------
+-- 1101                 CS1001               01                   SP22                 111                  Mon                  09:00                10:30                13                           30
+
+
+-- Ques 17.
+SQL> select * from location INNER JOIN ROOM ON Room.RoomType = Location.RoomType where location.RoomType = 'C';
+
+-- ROOMID               BUILDING             ROOMNO                 CAPACITY ROOMTYPE             ROOMTYPE             ROOMDESC
+-- -------------------- -------------------- -------------------- ---------- -------------------- -------------------- --------------------
+-- 2                    WingB                602                           3 C                    C                    Classroom
+
+
 -- Ques 18.
-SQL> select * from room where roomtype='C';
-
--- ROOMTYPE             ROOMDESC
--- -------------------- --------------------
--- C                    Classroom
-
-
--- Ques 19.
 SQL> create table SP03SECT as select CourseID, Section, FacultyID, RoomID from crssection;
 
 -- Table created.
@@ -180,6 +189,19 @@ SQL> select * from sp03sect;
 -- CS1001               01                   111                  13
 -- DB2002               01                   123                  13
 -- IT2003               02                   111                  14
+-- WT1006               03                   345                  14
+-- CO1004               02                   345                  14
+
+-- Ques 19
+SQL> delete from SP03SECT where facultyID = (select facultyID from faculty where name='Rajdeep');
+
+-- 2 rows deleted.
+
+SQL> select * from SP03Sect;
+
+-- COURSEID             SECTION              FACULTYID            ROOMID
+-- -------------------- -------------------- -------------------- --------------------
+-- DB2002               01                   123                  13
 -- WT1006               03                   345                  14
 -- CO1004               02                   345                  14
 
