@@ -79,7 +79,7 @@ SQL> select * from emp30;
 
 
 -- Ques 9.
-MERGE INTO emp30 o  USING (SELECT EmployeeId, Lname, Fname, HireDate, Salary  FROM employee) e ON (o.EmployeeId = e.EmployeeId)WHEN MATCHED THEN UPDATE SET o.Salary = e.Salary WHEN NOT MATCHED THEN INSERT (o.EmployeeId,o.Lname,o.Fname,o.HireDate,o.Salary) VALUES (e.EmployeeId,e.Lname,e.Fname,e.HireDate,e.Salary);
+MERGE INTO emp30 o  USING (SELECT EmployeeId, Lname, Fname, HireDate, Salary, deptid  FROM employee) e ON (o.EmployeeId = e.EmployeeId)WHEN MATCHED THEN UPDATE SET o.Salary = e.Salary WHEN NOT MATCHED THEN INSERT (o.EmployeeId,o.Lname,o.Fname,o.HireDate,o.Salary,o.deptid) VALUES (e.EmployeeId,e.Lname,e.Fname,e.HireDate,e.Salary,e.deptid);
 
 -- Ques 10.
 SQL> SELECT Lname, Fname, Salary, DeptId  FROM employee o WHERE Salary = (SELECT MIN(Salary)  FROM employee WHERE DeptId = o.DeptId   GROUP BY DeptId);
@@ -149,8 +149,8 @@ select faculty.name, faculty.phone from faculty where faculty.facultyid = (selec
 -- Ques 15.
 SQL> select * from location where roomtype != 'O' and capacity <= ANY
   2      (select capacity from
-  3      (select capacity from location where roomtype != 'O' group by capacity order by capacity)
-  4  where rownum <= 2);
+  3      (select capacity from location where roomtype != 'O' group by capacity order by capacity))
+  4  AND rownum <= 2;
 
 -- ROOMID               BUILDING             ROOMNO                 CAPACITY ROOMTYPE
 -- -------------------- -------------------- -------------------- ---------- --------------------
