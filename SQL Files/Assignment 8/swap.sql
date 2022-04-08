@@ -12,7 +12,7 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('A: '||a);
     DBMS_OUTPUT.PUT_LINE('B: '||b);
     
-    a := c;
+    c := a;
     a := b;
     b := c;
 

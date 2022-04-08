@@ -9,6 +9,6 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('Enter Your Last Name: ');
     lastName := '&lastName';
 
-    DBMS_OUTPUT.PUT_LINE('Hello ' ||firstName ||', ' ||lastName);
+    DBMS_OUTPUT.PUT_LINE('Hello ' ||lastName ||', ' ||firstName );
 
 END;
