@@ -1,8 +1,8 @@
 DECLARE
     num int;
-    square NUMBER(50,2);
-    cube NUMBER(50,2);
-    double_num NUMBER(50,2);
+    square NUMBER(20,2);
+    cube NUMBER(20,2);
+    double_num NUMBER(20,2);
 
 BEGIN
     DBMS_OUTPUT.PUT_LINE('Enter a Number');
