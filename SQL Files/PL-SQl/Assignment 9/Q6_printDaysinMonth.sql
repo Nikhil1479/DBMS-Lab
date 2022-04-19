@@ -3,8 +3,7 @@ DECLARE
     month number;
     year number;
 BEGIN
--- month := &month;
--- year := &year;
+
 numberOfDays := TO_DATE('&month-&year','mm-yyyy');
 numberOfDays := LAST_DAY(numberOfDays);
 

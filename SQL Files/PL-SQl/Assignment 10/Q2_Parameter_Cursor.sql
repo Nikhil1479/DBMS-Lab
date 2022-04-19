@@ -1,4 +1,5 @@
 DECLARE
+
     v_empID number(10);
     v_fname varchar2(20);
     v_lname varchar2(20);
