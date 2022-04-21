@@ -14,7 +14,6 @@ BEGIN
 EXCEPTION
     WHEN TOO_MANY_ROWS THEN
     DBMS_OUTPUT.PUT_LINE('More than one employee with such qualification');
-`
     When NO_DATA_FOUND THEN
     DBMS_OUTPUT.PUT_LINE('No Employees with such Qualification');
 END;
