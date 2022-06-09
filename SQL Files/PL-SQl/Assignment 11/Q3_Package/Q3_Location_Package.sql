@@ -45,4 +45,3 @@ CREATE OR REPLACE PACKAGE BODY college_package AS
     END section_count;
 --   -------------------------------------------------
    END college_package;
-   /

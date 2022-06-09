@@ -1,0 +1,55 @@
+
+SQL*Plus: Release 19.0.0.0.0 - Production on Mon Apr 25 20:03:32 2022
+Version 19.3.0.0.0
+
+Copyright (c) 1982, 2019, Oracle.  All rights reserved.
+
+Enter user-name: nikhil
+Enter password:
+Last Successful login time: Sat Apr 23 2022 15:14:24 +05:30
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+Version 19.3.0.0.0
+
+SQL> set lines 256
+SQL> CREATE TABLE student(ID number PRIMARY KEY, Name varchar2(30), Marks number);
+CREATE TABLE student(ID number PRIMARY KEY, Name varchar2(30), Marks number)
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> CREATE TABLE students(ID number PRIMARY KEY, Name varchar2(30), Marks number);
+
+Table created.
+
+SQL> INSERT INTO STUDENTS VALUES('1','Ashley','81');
+
+1 row created.
+
+SQL> INSERT INTO STUDENTS VALUES('2','Samantha','75');
+
+1 row created.
+
+SQL> INSERT INTO STUDENTS VALUES('3','Julia','76');
+
+1 row created.
+
+SQL> INSERT INTO STUDENTS VALUES('3','Julia','76');
+INSERT INTO STUDENTS VALUES('3','Julia','76')
+*
+ERROR at line 1:
+ORA-00001: unique constraint (NIKHIL.SYS_C007590) violated
+
+
+SQL> INSERT INTO STUDENTS VALUES('4','Belvet','84');
+
+1 row created.
+
+SQL> commit
+  2  ;
+
+Commit complete.
+
+SQL>

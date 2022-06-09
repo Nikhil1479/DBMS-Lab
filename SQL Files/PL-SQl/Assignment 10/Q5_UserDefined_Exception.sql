@@ -1,8 +1,10 @@
 DECLARE
     no_course EXCEPTION;
-    CURSOR course_cur IS
-      SELECT * FROM course;
+
+    CURSOR course_cur IS SELECT * FROM course;
+
     crs_id course.CourseId%TYPE := '&CourseId';
+
     found BOOLEAN := FALSE;
     course_rec course%ROWTYPE;
 
